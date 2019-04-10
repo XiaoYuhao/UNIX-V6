@@ -116,7 +116,7 @@ public:
 	int t_state;	/* 设备状态字 */
 	short dev;		/* 设备号 */
 
-
+	int ntty; /* 在多用户系统中存在多个tty终端，给每个tty终端一个标号 */
 	char Canonb[CANBSIZ];	/* 对输入字符处理的工作缓存 */
 };
 

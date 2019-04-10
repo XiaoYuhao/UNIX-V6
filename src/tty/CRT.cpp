@@ -7,7 +7,8 @@ unsigned int CRT::m_CursorY = 0;
 char* CRT::m_Position = 0;
 char* CRT::m_BeginChar = 0;
 
-unsigned int CRT::ROWS = 15;
+unsigned int CRT::ROWS = 14;
+
 
 
 void CRT::CRTStart(TTy* pTTy)

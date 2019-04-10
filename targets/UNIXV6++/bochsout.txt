@@ -30,7 +30,7 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: yes
 00000000000i[     ]   VGA extension support: vbe cirrus
-00000000000i[MEM0 ] allocated memory at 0482B020. after alignment, vector=0482C000
+00000000000i[MEM0 ] allocated memory at 04931020. after alignment, vector=04932000
 00000000000i[MEM0 ] 32.00MB
 00000000000i[MEM0 ] mem block size = 0x00100000, blocks=32
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('D:\unix v6++\Bochs-2.6/bios/BIOS-bochs-latest')
@@ -40,7 +40,7 @@
 00000000000i[PCI  ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
 00000000000i[     ] init_dev of 'cmos' plugin device by virtual method
 00000000000i[CMOS ] Using local time for initial clock
-00000000000i[CMOS ] Setting initial clock to: Tue Apr 09 23:52:12 2019 (time0=1554825132)
+00000000000i[CMOS ] Setting initial clock to: Wed Apr 10 19:26:57 2019 (time0=1554895617)
 00000000000i[     ] init_dev of 'dma' plugin device by virtual method
 00000000000i[DMA  ] channel 4 used by cascade
 00000000000i[     ] init_dev of 'pic' plugin device by virtual method
@@ -185,26 +185,26 @@
 00017928181i[MEM0 ] allocate_block: block=0x2 used 0x4 of 0x20
 00017961022i[MEM0 ] allocate_block: block=0x3 used 0x5 of 0x20
 00018803762i[MEM0 ] allocate_block: block=0x4 used 0x6 of 0x20
-00019429784i[MEM0 ] allocate_block: block=0x7 used 0x7 of 0x20
-00869952000p[WGUI ] >>PANIC<< POWER button turned off.
-00869952000i[CPU0 ] CPU is in protected mode (halted)
-00869952000i[CPU0 ] CS.mode = 32 bit
-00869952000i[CPU0 ] SS.mode = 32 bit
-00869952000i[CPU0 ] EFER   = 0x00000000
-00869952000i[CPU0 ] | EAX=c03fff10  EBX=00000002  ECX=00000001  EDX=c0119580
-00869952000i[CPU0 ] | ESP=c03fff0c  EBP=c03fff1c  ESI=000e0000  EDI=0000ffac
-00869952000i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf ZF af PF cf
-00869952000i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
-00869952000i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
-00869952000i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00869952000i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00869952000i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00869952000i[CPU0 ] |  FS:0000( 0000| 0|  0) 00000000 00000000 0 0
-00869952000i[CPU0 ] |  GS:0000( 0000| 0|  0) 00000000 00000000 0 0
-00869952000i[CPU0 ] | EIP=c010ce1e (c010ce1e)
-00869952000i[CPU0 ] | CR0=0xe0000011 CR2=0x3131314d
-00869952000i[CPU0 ] | CR3=0x00200000 CR4=0x00000000
-00869952000i[CPU0 ] 0xc010ce1e>> jmp .-217 (0xc010cd4a) : E927FFFFFF
-00869952000i[CMOS ] Last time is 1554825349 (Tue Apr 09 23:55:49 2019)
-00869952000i[     ] restoring default signal behavior
-00869952000i[CTRL ] quit_sim called with exit code 1
+00019429228i[MEM0 ] allocate_block: block=0x7 used 0x7 of 0x20
+00427200000p[WGUI ] >>PANIC<< POWER button turned off.
+00427200000i[CPU0 ] CPU is in protected mode (halted)
+00427200000i[CPU0 ] CS.mode = 32 bit
+00427200000i[CPU0 ] SS.mode = 32 bit
+00427200000i[CPU0 ] EFER   = 0x00000000
+00427200000i[CPU0 ] | EAX=c03fff10  EBX=00000002  ECX=00000001  EDX=c0119580
+00427200000i[CPU0 ] | ESP=c03fff0c  EBP=c03fff1c  ESI=000e0000  EDI=0000ffac
+00427200000i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf ZF af PF cf
+00427200000i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+00427200000i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00427200000i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00427200000i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00427200000i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00427200000i[CPU0 ] |  FS:0000( 0000| 0|  0) 00000000 00000000 0 0
+00427200000i[CPU0 ] |  GS:0000( 0000| 0|  0) 00000000 00000000 0 0
+00427200000i[CPU0 ] | EIP=c010ce1e (c010ce1e)
+00427200000i[CPU0 ] | CR0=0xe0000011 CR2=0x00000000
+00427200000i[CPU0 ] | CR3=0x00200000 CR4=0x00000000
+00427200000i[CPU0 ] 0xc010ce1e>> jmp .-217 (0xc010cd4a) : E927FFFFFF
+00427200000i[CMOS ] Last time is 1554895723 (Wed Apr 10 19:28:43 2019)
+00427200000i[     ] restoring default signal behavior
+00427200000i[CTRL ] quit_sim called with exit code 1

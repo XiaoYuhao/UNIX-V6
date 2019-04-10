@@ -212,6 +212,7 @@ void TTy::FlushTTy()
 	X86Assembly::STI();
 }
 
+
 int TTy::Canon()
 {
 	char* pChar;

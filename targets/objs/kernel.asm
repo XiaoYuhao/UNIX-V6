@@ -2717,7 +2717,7 @@ c0101f6b:	89 e5                	mov    %esp,%ebp
 c0101f6d:	83 ec 08             	sub    $0x8,%esp
 c0101f70:	83 25 80 50 11 c0 f8 	andl   $0xfffffff8,0xc0115080
 c0101f77:	83 05 80 50 11 c0 08 	addl   $0x8,0xc0115080
-c0101f7e:	83 3d 80 50 11 c0 27 	cmpl   $0x27,0xc0115080
+c0101f7e:	83 3d 80 50 11 c0 26 	cmpl   $0x26,0xc0115080
 c0101f85:	76 07                	jbe    c0101f8e <__ZN3CRT3TabEv+0x24>
 c0101f87:	e8 4c ff ff ff       	call   c0101ed8 <__ZN3CRT8NextLineEv>
 c0101f8c:	eb 16                	jmp    c0101fa4 <__ZN3CRT3TabEv+0x3a>
@@ -2747,7 +2747,7 @@ c0101fd1:	66 0f b6 45 ff       	movzbw -0x1(%ebp),%ax
 c0101fd6:	0d 00 0f 00 00       	or     $0xf00,%eax
 c0101fdb:	66 89 04 11          	mov    %ax,(%ecx,%edx,1)
 c0101fdf:	ff 05 80 50 11 c0    	incl   0xc0115080
-c0101fe5:	83 3d 80 50 11 c0 27 	cmpl   $0x27,0xc0115080
+c0101fe5:	83 3d 80 50 11 c0 26 	cmpl   $0x26,0xc0115080
 c0101fec:	76 05                	jbe    c0101ff3 <__ZN3CRT9WriteCharEc+0x4d>
 c0101fee:	e8 e5 fe ff ff       	call   c0101ed8 <__ZN3CRT8NextLineEv>
 c0101ff3:	a1 84 50 11 c0       	mov    0xc0115084,%eax
@@ -2775,7 +2775,7 @@ c010202e:	89 d0                	mov    %edx,%eax
 c0102030:	c1 e0 04             	shl    $0x4,%eax
 c0102033:	89 45 f4             	mov    %eax,-0xc(%ebp)
 c0102036:	c7 45 f8 00 00 00 00 	movl   $0x0,-0x8(%ebp)
-c010203d:	83 7d f8 27          	cmpl   $0x27,-0x8(%ebp)
+c010203d:	83 7d f8 26          	cmpl   $0x26,-0x8(%ebp)
 c0102041:	77 1b                	ja     c010205e <__ZN3CRT11ClearScreenEv+0x52>
 c0102043:	8b 45 f8             	mov    -0x8(%ebp),%eax
 c0102046:	03 45 f4             	add    -0xc(%ebp),%eax
@@ -22236,7 +22236,7 @@ c0110c98:	e8 4f 9f ff ff       	call   c010abec <__ZN7Process5SleepEmi>
 c0110c9d:	eb b4                	jmp    c0110c53 <__ZN3TTy5CanonEv+0x1b>
 c0110c9f:	e8 7c 13 00 00       	call   c0112020 <__ZN11X86Assembly3STIEv>
 c0110ca4:	8b 45 08             	mov    0x8(%ebp),%eax
-c0110ca7:	05 2c 06 00 00       	add    $0x62c,%eax
+c0110ca7:	05 32 06 00 00       	add    $0x632,%eax
 c0110cac:	89 45 fc             	mov    %eax,-0x4(%ebp)
 c0110caf:	8b 45 08             	mov    0x8(%ebp),%eax
 c0110cb2:	89 04 24             	mov    %eax,(%esp)
@@ -22266,7 +22266,7 @@ c0110d01:	0f be 92 20 06 00 00 	movsbl 0x620(%edx),%edx
 c0110d08:	39 d0                	cmp    %edx,%eax
 c0110d0a:	75 14                	jne    c0110d20 <__ZN3TTy5CanonEv+0xe8>
 c0110d0c:	8b 45 08             	mov    0x8(%ebp),%eax
-c0110d0f:	05 2c 06 00 00       	add    $0x62c,%eax
+c0110d0f:	05 32 06 00 00       	add    $0x632,%eax
 c0110d14:	3b 45 fc             	cmp    -0x4(%ebp),%eax
 c0110d17:	73 96                	jae    c0110caf <__ZN3TTy5CanonEv+0x77>
 c0110d19:	8d 45 fc             	lea    -0x4(%ebp),%eax
@@ -22288,13 +22288,13 @@ c0110d4b:	88 02                	mov    %al,(%edx)
 c0110d4d:	8d 45 fc             	lea    -0x4(%ebp),%eax
 c0110d50:	ff 00                	incl   (%eax)
 c0110d52:	8b 45 08             	mov    0x8(%ebp),%eax
-c0110d55:	05 2a 07 00 00       	add    $0x72a,%eax
+c0110d55:	05 30 07 00 00       	add    $0x730,%eax
 c0110d5a:	3b 45 fc             	cmp    -0x4(%ebp),%eax
 c0110d5d:	0f 87 4c ff ff ff    	ja     c0110caf <__ZN3TTy5CanonEv+0x77>
 c0110d63:	8b 45 fc             	mov    -0x4(%ebp),%eax
 c0110d66:	89 45 f0             	mov    %eax,-0x10(%ebp)
 c0110d69:	8b 45 08             	mov    0x8(%ebp),%eax
-c0110d6c:	05 2c 06 00 00       	add    $0x62c,%eax
+c0110d6c:	05 32 06 00 00       	add    $0x632,%eax
 c0110d71:	89 45 fc             	mov    %eax,-0x4(%ebp)
 c0110d74:	8b 45 fc             	mov    -0x4(%ebp),%eax
 c0110d77:	3b 45 f0             	cmp    -0x10(%ebp),%eax
