@@ -2,8 +2,8 @@
 #include "IOPort.h"
 
 unsigned short* CRT::m_VideoMemory = (unsigned short *)(0xB8000 + 0xC0000000);
-unsigned int CRT::m_CursorX = 0;
-unsigned int CRT::m_CursorY = 0;
+int CRT::m_CursorX = 0;		/*源代码这里有个Bug，应该为int而不是unsigned int*/
+int CRT::m_CursorY = 0;
 char* CRT::m_Position = 0;
 char* CRT::m_BeginChar = 0;
 
@@ -13,6 +13,7 @@ unsigned int CRT::ROWS = 14;
 
 void CRT::CRTStart(TTy* pTTy)
 {
+	int ntty=pTTy->ntty;	//获取当前tty的编号
 	char ch;
 	if ( 0 == CRT::m_BeginChar)
 	{
@@ -28,7 +29,7 @@ void CRT::CRTStart(TTy* pTTy)
 		switch (ch)
 		{
 		case '\n':
-			NextLine();
+			NextLine(ntty);
 			CRT::m_BeginChar = pTTy->t_outq.CurrentChar();
 			m_Position = CRT::m_BeginChar;
 			break;
@@ -40,18 +41,18 @@ void CRT::CRTStart(TTy* pTTy)
 		case '\b':
 			if ( m_Position != CRT::m_BeginChar )
 			{
-				BackSpace();
+				BackSpace(ntty);
 				m_Position--;
 			}
 			break;
 
 		case '\t':
-			Tab();
+			Tab(ntty);
 			m_Position++;
 			break;
 
 		default:	/* 在屏幕上回显普通字符 */
-			WriteChar(ch);
+			WriteChar(ch,ntty);
 			m_Position++;
 			break;
 		}
@@ -75,41 +76,62 @@ void CRT::MoveCursor(unsigned int col, unsigned int row)
 	IOPort::OutByte(CRT::VIDEO_DATA_PORT, cursorPosition & 0xFF);
 }
 
-void CRT::NextLine()
+void CRT::NextLine(int ntty)
 {
-	m_CursorX = 0;
-	m_CursorY += 1;
+	if(ntty==0){
+		m_CursorX = 0;
+		m_CursorY += 1;
+	}
+	else{
+		m_CursorX = 40;
+		m_CursorY += 1;
+	}
+
 
 	/* 超出最大行数 */
 	if ( m_CursorY >= CRT::ROWS )
 	{
 		m_CursorY = 0;
-		ClearScreen();
+		ClearScreen(ntty);
 	}
 	MoveCursor(m_CursorX, m_CursorY);
 }
 
-void CRT::BackSpace()
+void CRT::BackSpace(int ntty)
 {
 	m_CursorX--;
 
 	/* 移动光标，如果要回到上一行的话 */
-	if ( m_CursorX < 0 )
-	{
-		m_CursorX = CRT::COLUMNS - 1;
-		m_CursorY--;
-		if ( m_CursorY < 0 )
+	if(ntty==0){
+		if ( m_CursorX < 0 )
 		{
-			m_CursorY = 0;
+			m_CursorX = CRT::SCREN_COLUMNS - 1;
+			m_CursorY--;
+			if ( m_CursorY < 0 )
+			{
+				m_CursorY = 0;
+			}
 		}
 	}
+	else{
+		if ( m_CursorX < 40 )
+		{
+			m_CursorX = CRT::COLUMNS - 1;
+			m_CursorY--;
+			if ( m_CursorY < 0 )
+			{
+				m_CursorY = 0;
+			}
+		}
+	}
+
 	MoveCursor(m_CursorX, m_CursorY);
 
 	/* 在光标所在位置填上空格 */
 	m_VideoMemory[m_CursorY * COLUMNS + m_CursorX] = ' ' | CRT::COLOR;
 }
 
-void CRT::Tab()
+void CRT::Tab(int ntty)
 {
 	m_CursorX &= 0xFFFFFFF8;	/* 向左对齐到前一个Tab边界 */
 	m_CursorX += 8;
@@ -117,24 +139,32 @@ void CRT::Tab()
 	// m_CursorX -= m_CursorX % TabWidth;
 	// m_CursorX += TabWidth;
 	if ( m_CursorX >= CRT::SCREN_COLUMNS )
-		NextLine();
+		NextLine(ntty);
 	else
 		MoveCursor(m_CursorX, m_CursorY);
 }
 
-void CRT::WriteChar(char ch)
+void CRT::WriteChar(char ch,int ntty)
 {
 	m_VideoMemory[m_CursorY * CRT::COLUMNS + m_CursorX] = (unsigned char) ch | CRT::COLOR;
 	m_CursorX++;
 	
-	if ( m_CursorX >= CRT::SCREN_COLUMNS)
-	{
-		NextLine();
+	if(ntty==0){
+		if ( m_CursorX >= CRT::SCREN_COLUMNS)
+		{
+			NextLine(ntty);
+		}
+	}
+	else{
+		if ( m_CursorX >= CRT::COLUMNS)
+		{
+			NextLine(ntty);
+		}
 	}
 	MoveCursor(m_CursorX, m_CursorY);
 }
 
-void CRT::ClearScreen()
+void CRT::ClearScreen(int ntty)
 {
 	unsigned int i;
 
@@ -143,10 +173,20 @@ void CRT::ClearScreen()
 		m_VideoMemory[i] = (unsigned short)' ' | CRT::COLOR;
 	}*/
 	unsigned int j;
-	for(i=0;i<ROWS;i++){
-		int cn=i*CRT::COLUMNS;
-		for(j=0;j<CRT::SCREN_COLUMNS;j++){
-			m_VideoMemory[j+cn] = (unsigned short)' ' | CRT::COLOR;
+	if(ntty==0){
+		for(i=0;i<ROWS;i++){
+			int cn=i*CRT::COLUMNS;
+			for(j=0;j<CRT::SCREN_COLUMNS;j++){
+				m_VideoMemory[j+cn] = (unsigned short)' ' | CRT::COLOR;
+			}
+		}
+	}
+	else{
+		for(i=0;i<ROWS;i++){
+			int cn=i*CRT::COLUMNS+40;
+			for(j=0;j<CRT::SCREN_COLUMNS;j++){
+				m_VideoMemory[j+cn] = (unsigned short)' ' | CRT::COLOR;
+			}
 		}
 	}
 }

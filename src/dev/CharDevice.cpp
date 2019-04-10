@@ -7,6 +7,8 @@ CharDevice::CharDevice()
 {
 	this->m_TTy[0] = NULL;
 	this->m_TTy[1] = NULL;
+	this->m_TTy[0]->ntty=0;
+	this->m_TTy[1]->ntty=1;//给不同的tty设备标号
 }
 
 CharDevice::~CharDevice()

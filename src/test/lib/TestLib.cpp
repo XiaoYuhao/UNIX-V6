@@ -422,10 +422,10 @@ bool TTyQueueTest()
 
 bool ConsoleTest()
 {
-	CRT::ClearScreen();
+	CRT::ClearScreen(0);
 	
-	//User& u = Kernel::Instance().GetUser();
-
+	User& u = Kernel::Instance().GetUser();
+	CRT::ClearScreen(u.u_procp->p_ttyp->ntty);
 	//Diagnose::Write("pTTy addr = %x\n", u.u_procp->p_ttyp);
 	//Diagnose::Write("t_state = %x, t_flags = %x\n", u.u_procp->p_ttyp->t_state, u.u_procp->p_ttyp->t_flags);
 	//Delay();Delay();

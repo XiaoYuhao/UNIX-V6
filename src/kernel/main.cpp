@@ -206,7 +206,8 @@ extern "C" void next()
 	{
 		Machine::Instance().InitUserPageTable();
 		FlushPageDirectory();
-		CRT::ClearScreen();
+		CRT::ClearScreen(us.u_procp->p_ttyp->ntty);
+		CRT::ClearScreen(1);
 
 		/* 1#进程回用户态，执行exec("shell.exe")系统调用*/
 		MoveToUserStack();

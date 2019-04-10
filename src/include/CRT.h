@@ -27,25 +27,25 @@ public:
 	static void MoveCursor(unsigned int x, unsigned int y);
 
 	/* 换行处理子程序 */
-	static void NextLine();
+	static void NextLine(int ntty);
 
 	/* 退格处理子程序 */
-	static void BackSpace();
+	static void BackSpace(int ntty);
 	
 	/* Tab处理子程序 */
-	static void Tab();
+	static void Tab(int ntty);
 
 	/* 显示单个字符 */
-	static void WriteChar(char ch);
+	static void WriteChar(char ch,int ntty);
 
 	/* 清除屏幕 */
-	static void ClearScreen();
+	static void ClearScreen(int ntty);
 
 	/* Members */
 public:
 	static unsigned short* m_VideoMemory;
-	static unsigned int m_CursorX;
-	static unsigned int m_CursorY;
+	static int m_CursorX;
+	static int m_CursorY;
 
 	/* 指向输出缓存队列中当前要输出的字符 */
 	static char* m_Position;
