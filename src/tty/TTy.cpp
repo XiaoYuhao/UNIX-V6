@@ -62,7 +62,7 @@ char* TTy_Queue::CurrentChar()
 
 /*==============================class TTy===============================*/
 /* 控制台对象实例的定义 */
-TTy g_TTy;
+TTy g_TTy1,g_TTy2;
 
 TTy::TTy()
 {

@@ -47,8 +47,8 @@ void CharDevice::SgTTy(short dev, TTy* pTTy)
  * Open(), Close(), Read(), Write()等虚函数。
  */
 ConsoleDevice g_ConsoleDevice;
-extern TTy g_TTy;
-
+extern TTy g_TTy1;
+extern TTy g_TTY2;
 ConsoleDevice::ConsoleDevice()
 {
 	//nothing to do here
@@ -71,7 +71,7 @@ void ConsoleDevice::Open(short dev, int mode)
 
 	if ( NULL == this->m_TTy )
 	{
-		this->m_TTy = &g_TTy;
+		this->m_TTy = &g_TTy1;
 	}
 
 	/* 该进程第一次打开这个设备 */
