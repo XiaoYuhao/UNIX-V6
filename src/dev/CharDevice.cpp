@@ -82,16 +82,17 @@ void ConsoleDevice::Open(short dev, int mode)
 	/* 该进程第一次打开这个设备 */
 	if ( NULL == u.u_procp->p_ttyp )
 	{
-		u.u_procp->p_ttyp = this->m_TTy[0];	// 将进程与tty终端设备绑定
+		u.u_procp->p_ttyp = this->m_TTy[1];	// 将进程与tty终端设备绑定
 	}
 
 	/* 设置设备初始模式 */
-	if ( (this->m_TTy[0]->t_state & TTy::ISOPEN) == 0 )
+	if ( (this->m_TTy[1]->t_state & TTy::ISOPEN) == 0 )
 	{
-		this->m_TTy[0]->t_state = TTy::ISOPEN | TTy::CARR_ON;
-		this->m_TTy[0]->t_flags = TTy::ECHO;
-		this->m_TTy[0]->t_erase = TTy::CERASE;
-		this->m_TTy[0]->t_kill = TTy::CKILL;
+		this->m_TTy[1]->t_state = TTy::ISOPEN | TTy::CARR_ON;
+		this->m_TTy[1]->t_flags = TTy::ECHO;
+		this->m_TTy[1]->t_erase = TTy::CERASE;
+		this->m_TTy[1]->t_kill = TTy::CKILL;
+		this->m_TTy[1]->ntty=1;
 	}
 }
 

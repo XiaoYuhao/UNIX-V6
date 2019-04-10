@@ -126,12 +126,22 @@ void TTy::TTWrite()
 			/* 重新设置BeginChar指向输出字符缓存队列中，未确认部分的起始处。
 			 * 目的在于不允许Backspace键删除写在标准输出上的内容，譬如命令提示符之类。
 			 */
-			CRT::m_BeginChar = this->t_outq.CurrentChar();
+			if(this->ntty==0){
+				CRT::m_BeginChar = this->t_outq.CurrentChar();
+			}
+			else{
+				CRT::m2_BeginChar = this->t_outq.CurrentChar();
+			}
 		}
 		this->TTyOutput(ch);
 	}
 	this->TTStart();
-	CRT::m_BeginChar = this->t_outq.CurrentChar();
+	if(this->ntty==0){
+		CRT::m_BeginChar = this->t_outq.CurrentChar();
+	}
+	else{
+		CRT::m2_BeginChar = this->t_outq.CurrentChar();
+	}
 	/* 重设BeginChar为了防止错误删除打印的字符，这里需要清空显示缓存，但会造成前面输入回显
 	 * 的字符在被删除时并不能被删掉，但是在实际中已经被删除了。
 	 */

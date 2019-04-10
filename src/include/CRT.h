@@ -46,13 +46,17 @@ public:
 	static unsigned short* m_VideoMemory;
 	static int m_CursorX;
 	static int m_CursorY;
+	static int m2_CursorX;	/* tty2终端的XY坐标信息 */
+	static int m2_CursorY;
 
 	/* 指向输出缓存队列中当前要输出的字符 */
 	static char* m_Position;
+	static char* m2_Position;
 	/* 指向输出缓存队列中未确认的输出字符的开始处，即可以通过Backspace键删除的内容，
 	 * 最后一个回车之前的内容为已确认内容，不可被Backspace键删除。
 	 */
 	static char* m_BeginChar;
+	static char* m2_BeginChar;
 };
 
 #endif

@@ -200,7 +200,8 @@ void Keyboard::HandleScanCode(unsigned char scanCode, int expand)
 	}
 	if ( 0 != ch )
 	{
-		TTy* pTTy = Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy;
+		TTy* pTTy = Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[1];
+		int kk=pTTy->ntty;
 		if ( NULL != pTTy )
 		{
 			pTTy->TTyInput(ch);
@@ -243,7 +244,7 @@ ScanCodeTranslate(unsigned char scanCode, int expand)
 					ch = 0;
 
 					/* FLushÖÕ¶Ë */
-					TTy* pTTy = Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy;
+					TTy* pTTy = Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[1];
 					if ( NULL != pTTy )
 					{
 						pTTy->FlushTTy();
