@@ -188,6 +188,7 @@ extern "C" void next()
 	{
 		Utility::Panic("STDIN Error!");
 	}
+
 	fd_tty = lib_open("/dev/tty1", File::FWRITE);
 	if ( fd_tty != 1 )
 	{

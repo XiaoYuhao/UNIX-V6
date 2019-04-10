@@ -19,7 +19,7 @@ public:
 	virtual void SgTTy(short dev, TTy* pTTy);
 
 public:
-	TTy* m_TTy;		/* 指向字符设备TTy结构的指针 */
+	TTy* m_TTy[2];		/* 指向字符设备TTy结构的指针,此处有两个tty设备共用一个字符设备 */
 };
 
 

@@ -5,7 +5,8 @@
 /*==============================class CharDevice===============================*/
 CharDevice::CharDevice()
 {
-	this->m_TTy = NULL;
+	this->m_TTy[0] = NULL;
+	this->m_TTy[1] = NULL;
 }
 
 CharDevice::~CharDevice()
@@ -48,10 +49,11 @@ void CharDevice::SgTTy(short dev, TTy* pTTy)
  */
 ConsoleDevice g_ConsoleDevice;
 extern TTy g_TTy1;
-extern TTy g_TTY2;
+extern TTy g_TTy2;
 ConsoleDevice::ConsoleDevice()
 {
 	//nothing to do here
+
 }
 
 ConsoleDevice::~ConsoleDevice()
@@ -69,24 +71,25 @@ void ConsoleDevice::Open(short dev, int mode)
 		return;
 	}
 
-	if ( NULL == this->m_TTy )
+	if ( NULL == this->m_TTy[0] )
 	{
-		this->m_TTy = &g_TTy1;
+		this->m_TTy[0] = &g_TTy1;
+		this->m_TTy[1] = &g_TTy2;
 	}
 
 	/* 该进程第一次打开这个设备 */
 	if ( NULL == u.u_procp->p_ttyp )
 	{
-		u.u_procp->p_ttyp = this->m_TTy;	
+		u.u_procp->p_ttyp = this->m_TTy[0];	// 将进程与tty终端设备绑定
 	}
 
 	/* 设置设备初始模式 */
-	if ( (this->m_TTy->t_state & TTy::ISOPEN) == 0 )
+	if ( (this->m_TTy[0]->t_state & TTy::ISOPEN) == 0 )
 	{
-		this->m_TTy->t_state = TTy::ISOPEN | TTy::CARR_ON;
-		this->m_TTy->t_flags = TTy::ECHO;
-		this->m_TTy->t_erase = TTy::CERASE;
-		this->m_TTy->t_kill = TTy::CKILL;
+		this->m_TTy[0]->t_state = TTy::ISOPEN | TTy::CARR_ON;
+		this->m_TTy[0]->t_flags = TTy::ECHO;
+		this->m_TTy[0]->t_erase = TTy::CERASE;
+		this->m_TTy[0]->t_kill = TTy::CKILL;
 	}
 }
 
@@ -98,20 +101,21 @@ void ConsoleDevice::Close(short dev, int mode)
 void ConsoleDevice::Read(short dev)
 {
 	short minor = Utility::GetMinor(dev);
+	User& u = Kernel::Instance().GetUser();
 
 	if ( 0 == minor )
-	{
-		this->m_TTy->TTRead();	/* 判断是否选择了console */
+	{									/* 根据调用这个函数的进程绑定的tty进行读写*/
+		u.u_procp->p_ttyp->TTRead();	/* 判断是否选择了console */
 	}
 }
 
 void ConsoleDevice::Write(short dev)
 {
 	short minor = Utility::GetMinor(dev);
-
+	User& u = Kernel::Instance().GetUser();
 	if ( 0 == minor )
-	{
-		this->m_TTy->TTWrite();	/* 判断是否选择了console */
+	{									/* 根据调用这个函数的进程绑定的tty进行读写*/
+		u.u_procp->p_ttyp->TTWrite();	/* 判断是否选择了console */
 	}
 }
 
