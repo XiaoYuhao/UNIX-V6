@@ -35,7 +35,7 @@ char Keyboard::Shift_Keymap[] = {
 
 int Keyboard::Mode = 0;
 
-
+int TTy_no=0; //键盘输入指定的TTy终端中
 
 void Keyboard::KeyboardHandler( struct pt_regs* reg, struct pt_context* context )
 {
@@ -200,7 +200,7 @@ void Keyboard::HandleScanCode(unsigned char scanCode, int expand)
 	}
 	if ( 0 != ch )
 	{
-		TTy* pTTy = Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[1];
+		TTy* pTTy = Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[TTy_no];
 		int kk=pTTy->ntty;
 		if ( NULL != pTTy )
 		{
@@ -244,7 +244,7 @@ ScanCodeTranslate(unsigned char scanCode, int expand)
 					ch = 0;
 
 					/* FLush终端 */
-					TTy* pTTy = Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[1];
+					TTy* pTTy = Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[TTy_no];
 					if ( NULL != pTTy )
 					{
 						pTTy->FlushTTy();
@@ -254,6 +254,11 @@ ScanCodeTranslate(unsigned char scanCode, int expand)
 					for ( int killed = 0; killed < ProcessManager::NPROC ; killed ++ )
 						if ( procMgr.process[killed].p_pid > 1)
 							procMgr.process[killed].PSignal(User::SIGINT);
+				}
+				else if('t' == ch) /* ctrl+t --> 切换键盘指向的TTy设备*/
+				{
+					TTy_no=TTy_no^1;
+					ch=0;
 				}
 				else
 				{
