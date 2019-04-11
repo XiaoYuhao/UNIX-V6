@@ -27,6 +27,7 @@ SHELL_OBJS =$(TARGET)\commandtree.o	\
 all	:	$(SHELL_OBJS)
 	$(CC) $(CFLAGS) $(SHELL_OBJS) $(V6++LIB) -e _main1 -o $(TARGET)\Shell.exe
 	copy $(TARGET)\Shell.exe $(MAKEIMAGEPATH)\Shell.exe
+	copy $(TARGET)\Shell.exe $(MAKEIMAGEPATH)\Shell2.exe
 	
 $(TARGET)\commandtree.o :	CommandTree.c $(INCLUDE)\CommandTree.h
 	$(CC) $(CFLAGS) -I"$(INCLUDE)" -I"$(LIB_INCLUDE)" -c $< -o $@

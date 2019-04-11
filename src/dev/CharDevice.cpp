@@ -78,9 +78,13 @@ void ConsoleDevice::Open(short dev, int mode)
 	}
 
 	/* 该进程第一次打开这个设备 */
-	if ( NULL == u.u_procp->p_ttyp )
+	if ( (TTy*)0 == u.u_procp->p_ttyp )
 	{
 		u.u_procp->p_ttyp = this->m_TTy[0];	// 将进程与tty终端设备绑定
+	}
+	if ( (TTy*)1 == u.u_procp->p_ttyp)
+	{
+		u.u_procp->p_ttyp = this->m_TTy[1];
 	}
 
 	/* 设置设备初始模式 */

@@ -259,6 +259,7 @@ ScanCodeTranslate(unsigned char scanCode, int expand)
 				{
 					TTy_no=TTy_no^1;
 					ch=0;
+					//Kernel::Instance().GetProcessManager().Sched();
 				}
 				else
 				{

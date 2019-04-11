@@ -23,6 +23,7 @@
 #include "CMOSTime.h"
 #include "..\test\TestInclude.h"
 
+
 bool isInit = false;
 
 extern "C" void MasterIRQ7()
@@ -122,6 +123,15 @@ extern "C" void ExecShell()
 	return;
 }
 
+extern "C" void ExecShell2()
+{
+	int argc = 0;
+	char* argv = NULL;
+	char* pathname = "/Shell2.exe";
+	__asm__ __volatile__ ("int $0x80"::"a"(11/* execv */),"b"(pathname),"c"(argc),"d"(argv));
+	return;
+}
+
 /* 此函数test文件夹中的代码会引用，但貌似可以删除，记得把它删掉*/
 extern "C" void Delay()
 {
@@ -182,13 +192,12 @@ extern "C" void next()
 	Utility::StringCopy("/", us.u_curdir);
 
 	/* 打开TTy设备 */
-	int fd_tty = lib_open("/dev/tty1", File::FREAD);
-
+	int fd_tty;
+	fd_tty = lib_open("/dev/tty1", File::FREAD);
 	if ( fd_tty != 0 )
 	{
 		Utility::Panic("STDIN Error!");
 	}
-
 	fd_tty = lib_open("/dev/tty1", File::FWRITE);
 	if ( fd_tty != 1 )
 	{
@@ -210,8 +219,48 @@ extern "C" void next()
 		CRT::ClearScreen(1);
 
 		/* 1#进程回用户态，执行exec("shell.exe")系统调用*/
-		MoveToUserStack();
-		__asm__ __volatile__ ("call *%%eax" :: "a"((unsigned long)ExecShell - 0xC0000000));
+
+		pid = lib_fork();         /* 1#进程创建2#进程 */
+		if( 0 == pid )
+		{
+			pid = lib_fork();     /* 1#进程创建3#进程 */
+			if( 0== pid){
+				us.u_procp->p_ttyp = NULL;
+				Kernel::Instance().GetProcessManager().Sched();
+			}
+			else{
+				us.u_procp->p_ttyp=Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[0];
+				Machine::Instance().InitUserPageTable();
+				FlushPageDirectory();
+				Diagnose::Write("3# proc exec shell......pid=%d\n",pid);
+				/*while(1){
+					lib_sleep(1);
+					//Diagnose::Write("3# proc exec shell......pid=%d\n",pid);
+					lib_write(1,"222...",6);
+				}*/
+				MoveToUserStack();
+				//__asm__ __volatile__ ("call *%%eax" :: "a"((unsigned long)ExecShell - 0xC0000000));
+				ExecShell2();
+				//Shell();
+			}
+		}
+		else{ //二号进程
+			us.u_procp->p_ttyp=Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[1];
+			Machine::Instance().InitUserPageTable();
+			FlushPageDirectory();
+			Diagnose::Write("2# proc exec shell......pid=%d\n",pid);
+			//__asm__ __volatile__ ("call *%%eax" :: "a"((unsigned long)ExecShell - 0xC0000000));
+			//Kernel::Instance().GetProcessManager().Sched();
+			/*while(1){
+				lib_sleep(1);
+				//Diagnose::Write("3# proc exec shell......pid=%d\n",pid);
+				lib_write(1,"333...",6);
+			}*/
+			MoveToUserStack();
+			ExecShell();
+			//Kernel::Instance().GetProcessManager().Sched();
+			//Shell();
+		}
 	}
 }
 
