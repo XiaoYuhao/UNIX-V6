@@ -12,7 +12,8 @@ public:
 	static const int NODEV = -1;	/* NODEV设备号 */
 
 	static const short ROOTDEV = (0 << 8) | 0;	/* 磁盘的主、从设备号都为0 */
-	static const short TTYDEV = (0 << 8) | 0;	/* TTY终端字符设备的主、从设备号都为0 */
+	static const short TTYDEV = (0 << 8) | 0;	/* TTY1终端字符设备的主、从设备号都为0 */
+	//static const short TTYDEV2 = (0 << 8) | 1;	/* TTY2终端字符设备*/
 
 public:
 	DeviceManager();

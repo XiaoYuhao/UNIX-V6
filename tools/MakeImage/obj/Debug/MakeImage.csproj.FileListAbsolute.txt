@@ -1,0 +1,5 @@
+D:\UNIX V6++\oos\tools\MakeImage\bin\Debug\MakeImage.exe
+D:\UNIX V6++\oos\tools\MakeImage\bin\Debug\MakeImage.pdb
+D:\UNIX V6++\oos\tools\MakeImage\obj\Debug\MakeImage.csprojResolveAssemblyReference.cache
+D:\UNIX V6++\oos\tools\MakeImage\obj\Debug\MakeImage.exe
+D:\UNIX V6++\oos\tools\MakeImage\obj\Debug\MakeImage.pdb

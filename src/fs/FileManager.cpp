@@ -2,6 +2,7 @@
 #include "Kernel.h"
 #include "Utility.h"
 #include "TimeInterrupt.h"
+#include "Video.h"
 
 /*==========================class FileManager===============================*/
 FileManager::FileManager()
@@ -310,6 +311,8 @@ void FileManager::Read()
 void FileManager::Write()
 {
 	/* 直接调用Rdwr()函数即可 */
+	User& u = Kernel::Instance().GetUser();
+	Diagnose::Write("writing is pid=%d\n",u.u_procp->p_pid);
 	this->Rdwr(File::FWRITE);
 }
 

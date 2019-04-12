@@ -24,6 +24,7 @@ namespace Build
 		}
 
         /// <summary>
+		
         /// 将编译好的启动文件boot.bin按规定写入磁盘
         /// </summary>
 		public void WriteBootBlock()

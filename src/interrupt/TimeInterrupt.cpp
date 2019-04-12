@@ -127,6 +127,7 @@ void Time::Clock( struct pt_regs* regs, struct pt_context* context )
 				}
 			}
 		}
+
 		//Diagnose::Write("curpri = %d\n", procMgr.CurPri);
 		//Diagnose::Write("System Time: %d\n", Time::time);
 		

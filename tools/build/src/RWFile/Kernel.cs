@@ -11,6 +11,7 @@ namespace Build
 		/// </summary>
 		private RWFiles _kernelFile;
 
+		
         /// <summary>
         /// ╢еелнд╪Ч
         /// </summary>

@@ -45,6 +45,7 @@ namespace Build
             ConstructDirectoryStruct();
         }
 
+		
         /// <summary>
         /// 构建目录结构（包括根目录，设备文件目录以及其他一些目录等等）
         /// </summary>
@@ -57,6 +58,9 @@ namespace Build
             devDir.CreateDirectory();
 
             DevFile ttyDevFile = new DevFile(_superBlock, _inodeBlock, _dataBlock, _disk, "/dev/tty1","tty");
+            ttyDevFile .CreateFile();
+			
+			DevFile ttyDevFile = new DevFile(_superBlock, _inodeBlock, _dataBlock, _disk, "/dev/tty2","tty");
             ttyDevFile .CreateFile();
 
             WriteWholeDir();

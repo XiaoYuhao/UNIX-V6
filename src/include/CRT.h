@@ -41,6 +41,9 @@ public:
 	/* 清除屏幕 */
 	static void ClearScreen(int ntty);
 
+	/* 更换TTy终端时，刷新光标的位置 */
+	static void FreshCursor(int ntty);
+
 	/* Members */
 public:
 	static unsigned short* m_VideoMemory;

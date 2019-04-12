@@ -192,14 +192,14 @@ extern "C" void next()
 	Utility::StringCopy("/", us.u_curdir);
 
 	/* 打开TTy设备 */
-	int fd_tty;
-	fd_tty = lib_open("/dev/tty1", File::FREAD);
-	if ( fd_tty != 0 )
+	int fd_tty_in,fd_tty_out;
+	fd_tty_in = lib_open("/dev/tty1", File::FREAD);
+	if ( fd_tty_in != 0 )
 	{
 		Utility::Panic("STDIN Error!");
 	}
-	fd_tty = lib_open("/dev/tty1", File::FWRITE);
-	if ( fd_tty != 1 )
+	fd_tty_out = lib_open("/dev/tty1", File::FWRITE);
+	if ( fd_tty_out != 1 )
 	{
 		Utility::Panic("STDOUT Error!");
 	}
@@ -229,7 +229,17 @@ extern "C" void next()
 				Kernel::Instance().GetProcessManager().Sched();
 			}
 			else{
-				us.u_procp->p_ttyp=Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[0];
+				//us.u_procp->p_ttyp=Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[0];
+				lib_close(fd_tty_in);
+				lib_close(fd_tty_out);
+				fd_tty_in=lib_open("/dev/tty2", File::FREAD);
+				if(fd_tty_in!=0){
+					Utility::Panic("TTy2 STDIN Error!");
+				}
+				fd_tty_out = lib_open("/dev/tty2", File::FWRITE);
+				if ( fd_tty_out != 1 ){
+					Utility::Panic("TTy2 STDOUT Error!");
+				}
 				Machine::Instance().InitUserPageTable();
 				FlushPageDirectory();
 				Diagnose::Write("3# proc exec shell......pid=%d\n",pid);
@@ -245,7 +255,7 @@ extern "C" void next()
 			}
 		}
 		else{ //二号进程
-			us.u_procp->p_ttyp=Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[1];
+			//us.u_procp->p_ttyp=Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[1];
 			Machine::Instance().InitUserPageTable();
 			FlushPageDirectory();
 			Diagnose::Write("2# proc exec shell......pid=%d\n",pid);

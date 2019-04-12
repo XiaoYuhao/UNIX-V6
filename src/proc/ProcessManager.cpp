@@ -161,7 +161,7 @@ int ProcessManager::Swtch()
 
 	/* 挑选最适合上台的进程 */
 	Process* selected = Select();
-	//Diagnose::Write("Process id = %d Selected!\n", selected->p_pid);
+	Diagnose::Write("Process id = %d Selected!\n", selected->p_pid);
 
 	/* 恢复被保存进程的现场 */
 	X86Assembly::CLI();

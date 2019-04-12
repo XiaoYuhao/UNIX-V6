@@ -4,6 +4,7 @@
 #include "ProcessManager.h"
 #include "Video.h"
 #include "CharDevice.h"
+#include "CRT.h"
 
 char Keyboard::Keymap[] = {
 	0,0x1b,'1','2','3','4','5','6',		/* 0x00-0x07 0, <esc>,1,2,3,4,5,6, */
@@ -259,7 +260,8 @@ ScanCodeTranslate(unsigned char scanCode, int expand)
 				{
 					TTy_no=TTy_no^1;
 					ch=0;
-					//Kernel::Instance().GetProcessManager().Sched();
+					CRT::FreshCursor(TTy_no);
+					//Kernel::Instance().GetProcessManager().Sched();/*这个应该是核心态才能调用，用户态调用会出错*/
 				}
 				else
 				{

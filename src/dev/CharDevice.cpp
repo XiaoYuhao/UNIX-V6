@@ -63,30 +63,35 @@ ConsoleDevice::~ConsoleDevice()
 
 void ConsoleDevice::Open(short dev, int mode)
 {
-	short minor = Utility::GetMinor(dev);
+	short minor = Utility::GetMinor(dev);/*获取从设备号*/
 	User& u = Kernel::Instance().GetUser();
 
-	if ( minor != 0 )	/* 选择的不是console */
+	if ( minor != 0 && minor !=1 )	/* 选择的不是console */
 	{
 		return;
 	}
-
 	if ( NULL == this->m_TTy[0] )
 	{
 		this->m_TTy[0] = &g_TTy1;
 		this->m_TTy[1] = &g_TTy2;
 	}
 
-	/* 该进程第一次打开这个设备 */
+	if(	minor==0 ){
+		u.u_procp->p_ttyp = this->m_TTy[0];	// 将进程与tty终端设备绑定
+	}
+	else if( minor==1 ){
+		u.u_procp->p_ttyp = this->m_TTy[1];
+	}
+/*
 	if ( (TTy*)0 == u.u_procp->p_ttyp )
 	{
-		u.u_procp->p_ttyp = this->m_TTy[0];	// 将进程与tty终端设备绑定
+		u.u_procp->p_ttyp = this->m_TTy[0];
 	}
 	if ( (TTy*)1 == u.u_procp->p_ttyp)
 	{
 		u.u_procp->p_ttyp = this->m_TTy[1];
 	}
-
+*/
 	/* 设置设备初始模式 */
 	if ( (this->m_TTy[1]->t_state & TTy::ISOPEN) == 0 )
 	{
@@ -118,7 +123,7 @@ void ConsoleDevice::Read(short dev)
 	short minor = Utility::GetMinor(dev);
 	User& u = Kernel::Instance().GetUser();
 
-	if ( 0 == minor )
+	if ( 0 == minor || 1 == minor)
 	{									/* 根据调用这个函数的进程绑定的tty进行读写*/
 		u.u_procp->p_ttyp->TTRead();	/* 判断是否选择了console */
 	}
@@ -128,7 +133,7 @@ void ConsoleDevice::Write(short dev)
 {
 	short minor = Utility::GetMinor(dev);
 	User& u = Kernel::Instance().GetUser();
-	if ( 0 == minor )
+	if ( 0 == minor || 1 == minor)
 	{									/* 根据调用这个函数的进程绑定的tty进行读写*/
 		u.u_procp->p_ttyp->TTWrite();	/* 判断是否选择了console */
 	}

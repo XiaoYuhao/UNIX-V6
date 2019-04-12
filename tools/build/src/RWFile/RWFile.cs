@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace Build
 {
     /// <summary>
+	
     /// RWFiles对特定的一个文件进行操作
     /// </summary>
     public class RWFiles

@@ -269,3 +269,14 @@ void CRT::ClearScreen(int ntty)
 	}
 }
 
+void CRT::FreshCursor(int ntty){
+	if(ntty==0){
+		m_VideoMemory[m2_CursorY * CRT::COLUMNS + m2_CursorX] = (unsigned char) ' ' | CRT::COLOR;
+		MoveCursor(m_CursorX, m_CursorY);
+	}
+	else{
+		m_VideoMemory[m_CursorY * CRT::COLUMNS + m_CursorX] = (unsigned char) ' ' | CRT::COLOR;
+		MoveCursor(m2_CursorX, m2_CursorY);
+	}
+}
+

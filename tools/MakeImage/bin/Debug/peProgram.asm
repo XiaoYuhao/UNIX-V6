@@ -1,6 +1,7 @@
 
 peProgram.exe:     file format pei-i386
 
+
 Disassembly of section .text:
 
 00401000 <_foo>:
@@ -13,8 +14,8 @@ Disassembly of section .text:
   401005:	55                   	push   %ebp
   401006:	89 e5                	mov    %esp,%ebp
   401008:	83 ec 04             	sub    $0x4,%esp
-  40100b:	c7 45 fc 03 00 00 00 	movl   $0x3,0xfffffffc(%ebp)
-  401012:	c7 45 fc 05 00 00 00 	movl   $0x5,0xfffffffc(%ebp)
+  40100b:	c7 45 fc 03 00 00 00 	movl   $0x3,-0x4(%ebp)
+  401012:	c7 45 fc 05 00 00 00 	movl   $0x5,-0x4(%ebp)
   401019:	e8 e2 ff ff ff       	call   401000 <_foo>
   40101e:	b8 02 00 00 00       	mov    $0x2,%eax
   401023:	c9                   	leave  
