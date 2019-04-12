@@ -132,6 +132,22 @@ extern "C" void ExecShell2()
 	return;
 }
 
+extern "C" void ExecLogin()
+{
+	int argc = 0;
+	char* argv = NULL;
+	char* pathname = "/Login.exe";
+	__asm__ __volatile__ ("int $0x80"::"a"(11/* execv */),"b"(pathname),"c"(argc),"d"(argv));
+	return;
+}
+extern "C" void ExecLogin2()
+{
+	int argc = 0;
+	char* argv = NULL;
+	char* pathname = "/Login2.exe";
+	__asm__ __volatile__ ("int $0x80"::"a"(11/* execv */),"b"(pathname),"c"(argc),"d"(argv));
+	return;
+}
 /* 此函数test文件夹中的代码会引用，但貌似可以删除，记得把它删掉*/
 extern "C" void Delay()
 {
@@ -229,7 +245,6 @@ extern "C" void next()
 				Kernel::Instance().GetProcessManager().Sched();
 			}
 			else{
-				//us.u_procp->p_ttyp=Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[0];
 				lib_close(fd_tty_in);
 				lib_close(fd_tty_out);
 				fd_tty_in=lib_open("/dev/tty2", File::FREAD);
@@ -243,33 +258,18 @@ extern "C" void next()
 				Machine::Instance().InitUserPageTable();
 				FlushPageDirectory();
 				Diagnose::Write("3# proc exec shell......pid=%d\n",pid);
-				/*while(1){
-					lib_sleep(1);
-					//Diagnose::Write("3# proc exec shell......pid=%d\n",pid);
-					lib_write(1,"222...",6);
-				}*/
 				MoveToUserStack();
-				//__asm__ __volatile__ ("call *%%eax" :: "a"((unsigned long)ExecShell - 0xC0000000));
-				ExecShell2();
-				//Shell();
+				//ExecShell2();
+				ExecLogin2();
 			}
 		}
 		else{ //二号进程
-			//us.u_procp->p_ttyp=Kernel::Instance().GetDeviceManager().GetCharDevice(DeviceManager::TTYDEV).m_TTy[1];
 			Machine::Instance().InitUserPageTable();
 			FlushPageDirectory();
 			Diagnose::Write("2# proc exec shell......pid=%d\n",pid);
-			//__asm__ __volatile__ ("call *%%eax" :: "a"((unsigned long)ExecShell - 0xC0000000));
-			//Kernel::Instance().GetProcessManager().Sched();
-			/*while(1){
-				lib_sleep(1);
-				//Diagnose::Write("3# proc exec shell......pid=%d\n",pid);
-				lib_write(1,"333...",6);
-			}*/
 			MoveToUserStack();
-			ExecShell();
-			//Kernel::Instance().GetProcessManager().Sched();
-			//Shell();
+			//ExecShell();
+			ExecLogin();
 		}
 	}
 }

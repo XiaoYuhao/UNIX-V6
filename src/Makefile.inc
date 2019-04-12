@@ -16,7 +16,7 @@ LDFLAGS = -T $(LINKSCRIPT)
 #目录定义
 OBJFILES = ..\objs
 TARGET = ..\targets\objs
-DIRS = boot kernel machine interrupt mm proc dev fs tty test pe lib shell
+DIRS = boot kernel machine interrupt mm proc dev fs tty test pe lib shell login
 INCLUDE = ..\include
 IMGTARGET = ..\targets\img
 #"++"号是特殊符号，因此需要加引号

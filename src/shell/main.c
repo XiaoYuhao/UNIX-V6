@@ -11,7 +11,7 @@
 char line[1000];
 char* args[50];
 int argsCnt;
-int main1()
+int main1(int argc,char *argv[])
 {
 	char lineInput[512];
 	getPath( curPath );	
@@ -21,7 +21,7 @@ int main1()
 		root = -1;
 		argsCnt = 0;
 		InitCommandTree();
-		printf("[%s]#", curPath);
+		printf("[%s %s]$", argv[1],curPath);
 		gets( lineInput );		
 		if ( strcmp( "shutdown", lineInput ) == 0 )
 		{
