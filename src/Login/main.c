@@ -20,7 +20,7 @@ int main1(){
 		printf("Login:");
 		gets(username);
 		printf("Password:");
-		gets(password);
+		get_password(password);
 		if( strcmp( "root", username ) == 0 ){
 			if( strcmp( "123456", password ) == 0){
 				if( fork()){

@@ -26,6 +26,8 @@ int write(int fd, char* buf, int nbytes);
 
 int read(int fd, char* buf, int nbytes);
 
+int read_password(int fd, char* buf, int nbytes);
+
 int mknod(char* pathname,unsigned int mode, int dev);
 
 int link(char* pathname,char* newPathname);

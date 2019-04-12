@@ -79,7 +79,6 @@ TTy::~TTy()
  * 直至队列为空，或满足应用程序之所需（u.u_IOParam.m_Count 为  0）
  * 其间，进程有可能入睡。这一定是 因为标准输入队列为空，且原始输入队列中没有定界符
  * （用户没有输入回车，还可能对原始队列中的输入数据进行修改）
- * ？？为啥可能入睡...这里并没有入睡的操作呀
  * */
 void TTy::TTRead()
 {
@@ -181,6 +180,12 @@ void TTy::TTyInput(char ch)
 	if ( this->t_flags & TTy::ECHO )
 	{
 		this->TTyOutput(ch);
+		this->TTStart();
+	}
+	else if(this->t_flags & TTy::RPW){//如果是读密码的话，则不回显
+		if(ch=='\n'){
+			this->TTyOutput(ch);
+		}
 		this->TTStart();
 	}
 }

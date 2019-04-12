@@ -55,6 +55,15 @@ int read(int fd, char* buf, int nbytes)
 	return -1;
 }
 
+int read_password(int fd, char* buf,int nbytes)
+{
+	int res;
+	__asm__ __volatile__ ("int $0x80":"=a"(res):"a"(49),"b"(fd),"c"(buf),"d"(nbytes));
+	if ( res >= 0 )
+		return res;
+	return -1;
+}
+
 /*
 写文件系统调用c库封装函数
 fd：打开进程打开文件号

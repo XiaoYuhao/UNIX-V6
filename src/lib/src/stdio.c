@@ -22,3 +22,9 @@ void gets(char * s)
 	/* 以/n定界，因此最后要删去/n */
 	if ( s[n - 1] == '\n' ) s[n - 1] = 0;
 }
+
+void get_password(char *s){
+	int n = read_password(STDIN, s, 1024);
+	/* 以/n定界，因此最后要删去/n */
+	if ( s[n - 1] == '\n' ) s[n - 1] = 0;
+}

@@ -5,6 +5,7 @@
 #include "TimeInterrupt.h"
 #include "CRT.h"
 #include "Video.h"
+#include "TTy.h"
 
 /* 系统调用入口表的定义
  * 参照UNIX V6中sysent.c中对系统调用入口表sysent的定义 @line 2910 
@@ -60,7 +61,7 @@ SystemCallTableEntry SystemCall::m_SystemEntranceTable[SYSTEM_CALL_NUM] =
 	{ 1, &Sys_Setgid},				/* 46 = setgid	*/
 	{ 0, &Sys_Getgid},				/* 47 = getgid	*/
 	{ 2, &Sys_Ssig	},				/* 48 = sig	*/
-	{ 0, &Sys_Nosys	},				/* 49 = nosys	*/
+	{ 3, &Sys_ReadPw},				/* 49 = ReadPw	*/
 	{ 0, &Sys_Nosys	},				/* 50 = nosys	*/
 	{ 0, &Sys_Nosys	},				/* 51 = nosys	*/
 	{ 0, &Sys_Nosys	},				/* 52 = nosys	*/
@@ -720,3 +721,13 @@ int SystemCall::Sys_Ssig()
 
 	return 0;	/* GCC likes it ! */
 }
+/* 49 = ReadPW  count = 3   */
+int SystemCall::Sys_ReadPw(){
+	User& u = Kernel::Instance().GetUser();
+	u.u_procp->p_ttyp->t_flags=TTy::RPW;//设置TTy终端为读password模式
+	FileManager& fileMgr = Kernel::Instance().GetFileManager();
+	fileMgr.Read();
+	u.u_procp->p_ttyp->t_flags=TTy::ECHO;
+	return 0;
+}
+

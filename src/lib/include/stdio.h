@@ -7,6 +7,7 @@
 int sprintf(char* buffer, char* fmt,...);
 void printf(char* fmt,...);
 void gets(char *s);
+void get_password(char *s);
 
 /* Don't Del It!!! */
 extern char *g_STDIO_str;

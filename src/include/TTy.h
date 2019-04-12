@@ -62,6 +62,7 @@ public:
 	static const int ECHO = 0x8;
 	static const int CRMOD = 0x10;
 	static const int RAW =  0x20;
+	static const int RPW =  0x40;
 
 	/* Internal state bits (t_state…Ë÷√) */
 	static const int ISOPEN = 0x1;

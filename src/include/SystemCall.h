@@ -220,7 +220,10 @@ private:
 	/*	48 = sig	count = 2	*/
 	static int Sys_Ssig();
 	
-	/*	49 ~ 63 = nosys	count = 0	*/	
+	/* 49 = ReadPw  count = 3   */
+	static int Sys_ReadPw();
+
+	/*	50 ~ 63 = nosys	count = 0	*/
 
 private:
 	/*系统调用入口表的声明*/
