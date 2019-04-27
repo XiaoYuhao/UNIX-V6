@@ -23,10 +23,10 @@ int main1(int argc,char *argv[])
 		InitCommandTree();
 		printf("[%s %s]$", argv[1],curPath);
 		gets( lineInput );		
-		if ( strcmp( "shutdown", lineInput ) == 0 )
+		if ( strcmp( "Logout", lineInput ) == 0 )
 		{
 			syncFileSystem();
-			printf("You can safely turn down the computer now!\n");
+			printf("You can safely Logout the system now!\n");
 			break;
 		}
 		argsCnt = SpiltCommand(lineInput);
